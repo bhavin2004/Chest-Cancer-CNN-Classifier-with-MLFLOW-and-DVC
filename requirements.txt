@@ -1,0 +1,19 @@
+tensorflow
+numpy
+pandas
+scikit-learn
+dvc
+mlflow
+notebook
+matplotlib
+seaborn
+python-dotenv
+python-box
+pyYAML
+tqdm
+ensure
+joblib
+types-pyYAML
+scripy
+streamlit
+-e .
