@@ -3,6 +3,7 @@ numpy
 pandas
 scikit-learn
 dvc
+ipykernel
 mlflow
 notebook
 matplotlib
@@ -14,6 +15,8 @@ tqdm
 ensure
 joblib
 types-pyYAML
-scripy
+scipy
 streamlit
+kagglehub
+ipykernel
 -e .
