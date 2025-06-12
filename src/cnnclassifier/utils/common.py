@@ -8,31 +8,57 @@ import yaml
 from ensure import ensure_annotations
 from typing import Any
 
+import os
+import sys
+import json
+import requests
+from pathlib import Path
+from ensure import ensure_annotations 
+
 
 @ensure_annotations
-def download_dataset(url:str, local_filename:str='data.zip'):
+def download_kaggle_dataset(api_url: str, local_filename: str = "data.zip", kaggle_json_path: str = "config/kaggle.json") -> str:
     try:
-        size = int(requests.head(url).headers['Content-Length'])
-        if (os.path.exists(local_filename)) and (os.path.getsize(local_filename)==size):
-            logger.info("Dataset Already Exists")
+        # Load Kaggle API credentials
+        with open(kaggle_json_path, "r") as f:
+            kaggle_token = json.load(f)
+        username = kaggle_token["username"]
+        key = kaggle_token["key"]
 
-        else:    
-            with requests.get(url, stream=True) as r:
-                r.raise_for_status()
-                with open(local_filename, 'wb') as f:
-                    tmp=0
-                    last_log=-1
-                    for chunk in r.iter_content(chunk_size=8192): 
-                        f.write(chunk)
-                        tmp+=len(chunk)
-                        
-                        total_download = int((tmp/size) * 100) if size else 0 
-                        if total_download%10==0 and total_download!=last_log:
-                            logger.info(f"Downloaded {total_download}% of Dataset ")
-                            last_log = total_download
+        # Start authenticated session
+        session = requests.Session()
+        session.auth = (username, key)
+
+        # Make initial request to get redirected URL
+        response = session.get(api_url, allow_redirects=True, stream=True)
+        response.raise_for_status()
+
+        # Get file size for progress logging
+        size = int(response.headers.get("Content-Length", 0))
+
+        if os.path.exists(local_filename) and os.path.getsize(local_filename) == size:
+            logger.info("Dataset already exists.")
+            return local_filename
+
+        # Download in chunks
+        with open(local_filename, "wb") as f:
+            tmp = 0
+            last_log = -1
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+                    tmp += len(chunk)
+                    total_percent = int((tmp / size) * 100) if size else 0
+                    if total_percent % 10 == 0 and total_percent != last_log:
+                        logger.info(f"Downloaded {total_percent}%")
+                        last_log = total_percent
+
+        logger.info(f"Download complete: {local_filename}")
         return local_filename
+
     except Exception as e:
-        raise(CustomException(e,sys))
+        raise CustomException(e, sys)
+
     
     
 @ensure_annotations

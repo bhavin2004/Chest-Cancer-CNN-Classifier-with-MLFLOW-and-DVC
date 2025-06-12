@@ -2,6 +2,13 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir : artifacts/data_ingestion
-  source_URL : https://storage.googleapis.com/kaggle-data-sets/839140/1432479/bundle/archive.zip?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20250608%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20250608T182058Z&X-Goog-Expires=259200&X-Goog-SignedHeaders=host&X-Goog-Signature=001d87ad160428cdd1e3edcad52c6f567ce701aa2a37668b0bf0bd5b5ffa0f6fa4a8ff3546c5a52261ab2d4270da785b43443eeed994c71112e7e7d9ae695997c7d4acdac6dd3058b68efce736a9cb75218d55bc5545cacf892218b1747105d049905ffa8682bbcf5a3b791008b5c2130966b6fba3a70eebb38f83f9ec18fcd41842d50486e90df234c7f2c7731e9d0097b6da04873a93a02db373bd8e094cadacb0d1c161d734aee99bc6514a68e97fb921f1b80b9fe35f3e529989b069f3dc73f7128d03075820a26b9d03eb3aef827245904575ffcc5d0a1a4055f247cf098bea957e8c72997b61509a98965d2fabaf33e9dd1540627e20b70b6b5f390df5
+  source_URL : https://www.kaggle.com/api/v1/datasets/download/mohamedhanyyy/chest-ctscan-images
   local_data_file : artifacts/data_ingestion/data.zip
   unzip_dir : artifacts/data_ingestion
+
+
+prepare_base_model:
+  root_dir: artifacts/prepare_base_model
+  base_model_path : artifacts/prepare_base_model/model.keras
+  updated_base_model_path : artifacts/prepare_base_model/base_model_updated.keras
+  updated_base_model_png_path : artifacts/prepare_base_model/model_summary_image.png

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import sys
 from pathlib import Path
 from src.cnnclassifier import logger,CustomException
-from src.cnnclassifier.utils.common import download_dataset
+from src.cnnclassifier.utils.common import download_kaggle_dataset
 from src.cnnclassifier.config.configuration import ConfigurationManager
 
 
@@ -24,7 +24,7 @@ class DataIngestion:
             
             logger.info(f"Downloading dataset form {dataset_url} into file {zip_download_dir}")
             
-            download_dataset(dataset_url,zip_download_dir)
+            print(download_kaggle_dataset(dataset_url,zip_download_dir))
             
             logger.info(f"Dataset Downloaded Successfully at {zip_download_dir}")
         
