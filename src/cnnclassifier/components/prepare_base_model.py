@@ -70,7 +70,7 @@ class PrepareBaseModel:
         self.full_model = self._prepare_full_model(
             model=self.model,
             classes=self.config.params_classes,
-            freeze_till=3,
+            freeze_till=1,
             learning_rate=self.config.params_learning_rate,
             freeze_all=True
             

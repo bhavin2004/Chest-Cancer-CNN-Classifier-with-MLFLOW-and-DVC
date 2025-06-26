@@ -3,11 +3,13 @@ import sys
 from src.cnnclassifier.pipelines.stage_1_data_ingestion import DataIngestionTrainingPipeline
 from src.cnnclassifier.pipelines.stage_2_prepare_base_model import PrepareBaseModelPipeline
 from src.cnnclassifier.pipelines.stage_3_model_trainer import TrainingPipeline
-
+from src.cnnclassifier.config.configuration import ConfigurationManager
+import tensorflow as tf 
 
 STAGE_NAME = 'Data Ingestion State'
 
 try:
+    configure_obj= ConfigurationManager
     logger.info(f"\n>>>>>>>>>> stage:{STAGE_NAME} started <<<<<<<<<<")
     obj = DataIngestionTrainingPipeline()
     obj.main()
@@ -34,6 +36,7 @@ except Exception as e:
 STAGE_NAME = 'Training State'
 try:
     logger.info(f"\n>>>>>>>>>> stage:{STAGE_NAME} started <<<<<<<<<<")
+    print("Using GPU:", tf.config.list_logical_devices('GPU'))
     obj = TrainingPipeline()
     obj.main()
     logger.info(f"\n>>>>>>>>>> stage:{STAGE_NAME} completed <<<<<<<<<<\n\n{'='*50}")

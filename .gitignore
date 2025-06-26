@@ -194,3 +194,10 @@ cython_debug/
 .cursorindexingignore
 
 artifacts/*
+
+cancer_env/*
+
+tf_gpu/*
+
+tf_gpu1/*
+tfenv/*
