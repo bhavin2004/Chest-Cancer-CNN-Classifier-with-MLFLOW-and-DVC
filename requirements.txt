@@ -18,6 +18,5 @@ Flask
 Flask-Cors
 streamlit
 streamlit_option_menu
-pyarrow==15.0.2
-
+pyarrow==11.0.0
 -e .
