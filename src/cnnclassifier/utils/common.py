@@ -102,8 +102,18 @@ def create_directories(path_to_directories:list,verbose=True):
 def save_json(path: Path, data: dict):
     try:
         with open(path, "w") as f:
-            print('running')
             json.dump(data, f, indent=4)
         print(f"✅ JSON file saved at: {path}")
     except Exception as e:
-        print(f"❌ Failed to save JSON at {path}: {e}")
+        print(f"Failed to save JSON at {path}: {e}")
+
+
+
+def load_json(path:Path):
+    try:
+        with open(path, "r") as f:
+            return json.load(f)
+            
+        pass
+    except Exception as e:
+        print(f"Failed to load JSON at {path}: {e}")

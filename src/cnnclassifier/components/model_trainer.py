@@ -12,6 +12,7 @@ from src.cnnclassifier.entities.config_entity import ModelTrainerConfig
 from pathlib import Path
 import math
 from tensorflow.keras.applications.vgg16 import preprocess_input
+from src.cnnclassifier.utils.common import save_json
 
 
 
@@ -62,6 +63,9 @@ class Training:
             shuffle=True,
             **dataflow_kwargs
         )
+        print(self.train_generator.class_indices)
+        save_json(path=Path("classification_order.json"),data=self.train_generator.class_indices)
+
         
     @staticmethod
     def save_model(path: Path,model : tf.keras.Model):

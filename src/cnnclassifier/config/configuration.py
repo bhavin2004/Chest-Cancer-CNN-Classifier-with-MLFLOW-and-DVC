@@ -39,7 +39,7 @@ class ConfigurationManager:
             root_dir=Path(config.root_dir),
             base_model_path=Path(config.base_model_path),
             updated_base_model_path=Path(config.updated_base_model_path),
-            params_image_size=params.IAMGE_SIZE,
+            params_image_size=params.IMAGE_SIZE,
             params_learning_rate=params.LEARNING_RATE,
             params_classes=params.CLASSES,
             params_include_top=params.INCLUDE_TOP,
@@ -64,7 +64,7 @@ class ConfigurationManager:
             training_data=Path(training_data),
             params_epochs=params.EPOCHS,
             params_batch_size=params.BATCH_SIZE,
-            params_image_size=params.IAMGE_SIZE,
+            params_image_size=params.IMAGE_SIZE,
             params_is_augmentation=params.AUGMENTATION
             
         )
@@ -76,7 +76,7 @@ class ConfigurationManager:
             path_to_model=self.config.training.trained_model_path,
             training_data=Path(os.path.join(self.config.data_ingestion.unzip_dir,'Data')),
             all_params=self.params,
-            params_image_size=self.params.IAMGE_SIZE,
+            params_image_size=self.params.IMAGE_SIZE,
             params_batch_size=self.params.BATCH_SIZE,
         )
         

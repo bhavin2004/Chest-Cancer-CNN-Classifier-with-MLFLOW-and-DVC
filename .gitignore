@@ -193,7 +193,8 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
-artifacts/*
+artifacts/data_ingestion/*
+artifacts/prepare_base_model/*
 
 cancer_env/*
 

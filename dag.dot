@@ -1,0 +1,11 @@
+strict digraph {
+"data_ingestion";
+"prepare_base_model";
+"training";
+"evaluation";
+"data_ingestion" -> "training";
+"data_ingestion" -> "evaluation";
+"prepare_base_model" -> "training";
+"training" -> "evaluation";
+}
+
