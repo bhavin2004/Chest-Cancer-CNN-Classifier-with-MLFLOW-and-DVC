@@ -31,10 +31,4 @@ class PredictionPipeline:
             "probs": preds[0].tolist()
         }
         
-        
-pipeline = PredictionPipeline("artifacts/data_ingestion/Data/test/large.cell.carcinoma/000108.png")
-result = pipeline.predict()
-print(result)
 
-# Output:
-# {'class': 'Normal', 'probs': [0.02, 0.95, 0.01, 0.02]}
