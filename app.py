@@ -7,7 +7,6 @@ import pandas as pd
 import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
-import time
 from src.cnnclassifier.utils.common import load_json
 from src.cnnclassifier.pipelines.prediction import PredictionPipeline
 
@@ -76,7 +75,7 @@ if selection == "Home (1-image)":
 
         with col2:
             with st.spinner("Running inference…"):
-                time.sleep(1)
+
                 res = run_single_prediction(open(final_image, "rb") if isinstance(final_image, str) else uploaded_img)
 
             st.success(f"**Predicted class:** {res['class']}")
