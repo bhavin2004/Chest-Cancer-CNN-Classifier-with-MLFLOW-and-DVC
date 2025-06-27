@@ -163,13 +163,13 @@ This app classifies CT/X-ray images into **4 lung cancer categories** using a VG
 
     """)
 
-st.link_button("Check MLFLOW Expirements",'https://dagshub.com/bhavin2004/Chest-Cancer-CNN-Classifier-with-MLFLOW-and-DVC.mlflow')
+    st.link_button("Check MLFLOW Expirements",'https://dagshub.com/bhavin2004/Chest-Cancer-CNN-Classifier-with-MLFLOW-and-DVC.mlflow')
 
-st.markdown("""
+    st.markdown("""
 ### Visuals
     """)
 
-st.subheader("🔗 Pipeline Architecture")
+    st.subheader("🔗 Pipeline Architecture")
     with st.expander("Pipeline Diagram"):
         st.image("dag.png", caption="Pipeline Overview", use_container_width=True)
 
