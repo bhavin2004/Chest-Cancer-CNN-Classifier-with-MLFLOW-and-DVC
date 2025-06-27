@@ -143,7 +143,6 @@ elif selection == "Batch Predict":
 
         shutil.rmtree(tmp_dir)
 
-# ──────────────── ABOUT PROJECT ────────────────
 elif selection == "About Project":
     st.title("ℹ️ About the Chest-Cancer Classifier")
     st.markdown("""
@@ -162,6 +161,11 @@ This app classifies CT/X-ray images into **4 lung cancer categories** using a VG
 - ✅ VGG-16 Model  
 - ✅ DVC + MLflow  
 
+    """)
+
+st.link_button("Check MLFLOW Expirements",'https://dagshub.com/bhavin2004/Chest-Cancer-CNN-Classifier-with-MLFLOW-and-DVC.mlflow')
+
+st.markdown("""
 ### Visuals
     """)
 
