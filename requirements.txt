@@ -16,4 +16,6 @@ types-PyYAML
 scipy
 Flask
 Flask-Cors
+streamlit
+streamlit_option_menu
 -e .
