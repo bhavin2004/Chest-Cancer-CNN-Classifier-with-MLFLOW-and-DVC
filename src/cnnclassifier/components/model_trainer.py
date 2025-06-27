@@ -1,9 +1,18 @@
+# 🔴 nothing that touches TensorFlow should be imported above this block
 import os
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"                 # hide INFO/WARN
+os.environ["TF_XLA_FLAGS"] = "--tf_xla_enable_xla_devices=false"  # kill XLA logs
+
+import tensorflow as tf
+tf.get_logger().setLevel('ERROR')                        # silence Python logger
+
 import urllib.request as request
 from src.cnnclassifier.config.configuration import ConfigurationManager
 from src.cnnclassifier.entities.config_entity import ModelTrainerConfig
-import tensorflow as tf
 from pathlib import Path
+import math
+from tensorflow.keras.applications.vgg16 import preprocess_input
+
 
 
 class Training:
@@ -17,10 +26,7 @@ class Training:
     
     def train_valid_generator(self):
         
-        datagenerator_kwargs = dict(
-            rescale = 1./255,
-            # validation_split = 0.2
-        )
+        datagenerator_kwargs = dict(preprocessing_function=preprocess_input)
         
         dataflow_kwargs=  dict(
             target_size = self.config.params_image_size[:-1],
@@ -59,38 +65,31 @@ class Training:
         
     @staticmethod
     def save_model(path: Path,model : tf.keras.Model):
-        model.save(path)
+        model.save(path,save_format='keras')
         
         
     def train(self):
         self.get_base_model()
         self.train_valid_generator()
-        # self.steps_per_epochs = self.train_generator.samples // self.train_generator.batch_size
-        # self.validation_steps = self.valid_generator.samples // self.valid_generator.batch_size
+        self.steps_per_epochs = math.ceil(self.train_generator.samples / self.train_generator.batch_size)
+        self.validation_steps = math.ceil(self.valid_generator.samples / self.valid_generator.batch_size)
         
+        early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
+
+        reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=2, min_lr=1e-6, verbose=1)
+
         model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
         filepath='artifacts/training/model.weights.h5',
         monitor='val_accuracy',
         mode='max',
         save_best_only=True)
         
-        early_stopping_callback = tf.keras.callbacks.EarlyStopping(
-            monitor="val_loss",
-            min_delta=0,
-            patience=0,
-            verbose=0,
-            mode="auto",
-            baseline=None,
-            restore_best_weights=False,
-            start_from_epoch=0,
-        )
-        
-        callbacks=[early_stopping_callback,model_checkpoint_callback]
+        callbacks=[model_checkpoint_callback]
         self.model.fit(
             self.train_generator,
             epochs=self.config.params_epochs,
-            # steps_per_epoch = self.steps_per_epochs,
-            # validation_steps=self.validation_steps,
+            steps_per_epoch = self.steps_per_epochs,
+            validation_steps=self.validation_steps,
             validation_data=self.valid_generator,
             callbacks=callbacks,
             verbose=2

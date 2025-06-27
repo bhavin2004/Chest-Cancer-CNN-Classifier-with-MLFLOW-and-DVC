@@ -70,3 +70,14 @@ class ConfigurationManager:
         )
         
         return training_config
+    
+    def get_evaluation_config(self) -> EvaluationConfig:
+        eval_config = EvaluationConfig(
+            path_to_model=self.config.training.trained_model_path,
+            training_data=Path(os.path.join(self.config.data_ingestion.unzip_dir,'Data')),
+            all_params=self.params,
+            params_image_size=self.params.IAMGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE,
+        )
+        
+        return eval_config

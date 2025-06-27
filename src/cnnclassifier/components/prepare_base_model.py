@@ -38,12 +38,9 @@ class PrepareBaseModel:
                 i+=1
                 
         
-        flatten_in = Flatten()(model.output)
-        dense1 = Dense(
-            units=32,
-            activation='relu'
-        )(flatten_in)
-        drop1 = Dropout(0.2)(dense1)
+        x = tf.keras.layers.GlobalAveragePooling2D()(model.output)
+
+        drop1 = Dropout(0.2)(x)
         
         prediction = Dense(
             classes,
@@ -55,11 +52,9 @@ class PrepareBaseModel:
             outputs=prediction,
         )
         
-        full_model.compile(
-            optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
-            loss=tf.keras.losses.CategoricalCrossentropy(),
-            metrics=['accuracy']
-        )
+        full_model.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=1e-4, momentum=0.9),
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])
         
         full_model.summary()
         
