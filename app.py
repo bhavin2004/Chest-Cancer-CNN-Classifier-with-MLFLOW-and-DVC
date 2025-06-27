@@ -169,7 +169,7 @@ st.markdown("""
 ### Visuals
     """)
 
-    st.subheader("🔗 Pipeline Architecture")
+st.subheader("🔗 Pipeline Architecture")
     with st.expander("Pipeline Diagram"):
         st.image("dag.png", caption="Pipeline Overview", use_container_width=True)
 
